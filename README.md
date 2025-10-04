@@ -4,6 +4,20 @@ A simple blogging website built with Next.js 15.
 
 **Live:** [binida2k1.vercel.app](https://binida2k1.vercel.app)
 
+## Screenshots
+
+### Home Page
+
+![Home Page](screenshots/home.jpeg)
+
+### Blog Detail
+
+![Blog Detail](screenshots/blog-detail.jpeg)
+
+### Admin Dashboard
+
+![Admin Dashboard](screenshots/admin.jpeg)
+
 ## What's This?
 
 A blog platform where you can write and share articles. Has admin panel to manage posts.
