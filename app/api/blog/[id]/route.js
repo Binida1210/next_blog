@@ -3,8 +3,7 @@ import BlogModel from "../../../../lib/models/blog.model.js";
 import connectDB from "../../../../lib/config/db.js";
 import { auth } from "@clerk/nextjs/server";
 import { canEditBlog, canDeleteBlog } from "../../../../lib/roles.js";
-import fs from "fs";
-import path from "path";
+import { uploadToCloudinary } from "../../../../lib/config/cloudinary.js";
 
 // GET /api/blog/[id] - Get a blog post by ID
 export async function GET(request, { params }) {
@@ -78,66 +77,39 @@ export async function PUT(request, { params }) {
       status: formData.get("status") || existingBlog.status,
     };
 
-    // Handle image update if provided
+    // Handle image update if provided - Upload to Cloudinary
     const imageFile = formData.get("image");
     if (imageFile && imageFile.size > 0) {
+      console.log("Uploading new blog image to Cloudinary");
       const imageByteData = await imageFile.arrayBuffer();
       const imageBuffer = Buffer.from(imageByteData);
-      const imageExt = imageFile.name.split(".").pop();
-      const imageName = `image_${
-        imageFile.name.split(".")[0]
-      }_${timestamp}.${imageExt}`;
-      const imagePath = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
+
+      const imageName = `blog_${imageFile.name.split(".")[0]}_${timestamp}`;
+      const imageUrl = await uploadToCloudinary(
+        imageBuffer,
+        "blog-images",
         imageName
       );
-      await fs.promises.writeFile(imagePath, imageBuffer);
-      updateData.image = `/uploads/${imageName}`;
-
-      // Delete old image
-      if (existingBlog.image) {
-        const oldImagePath = path.join(
-          process.cwd(),
-          "public",
-          existingBlog.image
-        );
-        if (fs.existsSync(oldImagePath)) {
-          await fs.promises.unlink(oldImagePath);
-        }
-      }
+      updateData.image = imageUrl;
     }
 
-    // Handle author image update if provided
+    // Handle author image update if provided - Upload to Cloudinary
     const authorImageFile = formData.get("author_img");
     if (authorImageFile && authorImageFile.size > 0) {
+      console.log("Uploading new author image to Cloudinary");
       const authorImageByteData = await authorImageFile.arrayBuffer();
       const authorImageBuffer = Buffer.from(authorImageByteData);
-      const authorImageExt = authorImageFile.name.split(".").pop();
-      const authorImageName = `author_image_${
-        authorImageFile.name.split(".")[0]
-      }_${timestamp}.${authorImageExt}`;
-      const authorImagePath = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
+
+      const authorImageName = `author_${existingBlog.author.replace(
+        /\s+/g,
+        "_"
+      )}_${timestamp}`;
+      const authorImageUrl = await uploadToCloudinary(
+        authorImageBuffer,
+        "author-avatars",
         authorImageName
       );
-      await fs.promises.writeFile(authorImagePath, authorImageBuffer);
-      updateData.author_img = `/uploads/${authorImageName}`;
-
-      // Delete old author image
-      if (existingBlog.author_img) {
-        const oldAuthorImagePath = path.join(
-          process.cwd(),
-          "public",
-          existingBlog.author_img
-        );
-        if (fs.existsSync(oldAuthorImagePath)) {
-          await fs.promises.unlink(oldAuthorImagePath);
-        }
-      }
+      updateData.author_img = authorImageUrl;
     }
 
     const updatedBlog = await BlogModel.findByIdAndUpdate(id, updateData, {

@@ -3,8 +3,7 @@ import BlogModel from "../../../lib/models/blog.model.js";
 import connectDB from "../../../lib/config/db.js";
 import { auth } from "@clerk/nextjs/server";
 import { getUserRole, ROLES } from "../../../lib/roles.js";
-import fs from "fs";
-import path from "path";
+import { uploadToCloudinary } from "../../../lib/config/cloudinary.js";
 
 // GET /api/blog - Get all blog posts (optionally filter by author)
 export async function GET(request) {
@@ -68,7 +67,7 @@ export async function POST(request) {
     const author = formData.get("author");
     const status = formData.get("status") || "published";
 
-    // Xử lý file ảnh blog
+    // Upload blog image to Cloudinary
     const imageFile = formData.get("image");
     if (!imageFile) {
       return NextResponse.json(
@@ -77,49 +76,46 @@ export async function POST(request) {
       );
     }
 
-    console.log("Received image file:", imageFile);
+    console.log("Uploading image to Cloudinary:", imageFile.name);
     const imageByteData = await imageFile.arrayBuffer();
     const imageBuffer = Buffer.from(imageByteData);
 
-    const imageExt = imageFile.name.split(".").pop();
-    const imageName = `image_${
-      imageFile.name.split(".")[0]
-    }_${timestamp}.${imageExt}`;
-    const imagePath = path.join(process.cwd(), "public", "uploads", imageName);
+    const imageName = `blog_${imageFile.name.split(".")[0]}_${timestamp}`;
+    const imageUrl = await uploadToCloudinary(
+      imageBuffer,
+      "blog-images",
+      imageName
+    );
 
-    await fs.promises.writeFile(imagePath, imageBuffer);
-
-    // Xử lý ảnh tác giả - có thể là file hoặc URL
-    let authorImagePath = "";
+    // Upload author image to Cloudinary or use Clerk URL
+    let authorImageUrl = "";
     const authorImageFile = formData.get("author_img");
-    const authorImageUrl = formData.get("author_img_url");
+    const authorImageClerkUrl = formData.get("author_img_url");
 
     if (authorImageFile && authorImageFile.size > 0) {
-      // Nếu là file upload
+      // Upload author image to Cloudinary
+      console.log("Uploading author image to Cloudinary");
       const authorImageByteData = await authorImageFile.arrayBuffer();
       const authorImageBuffer = Buffer.from(authorImageByteData);
 
-      const authorImageExt = authorImageFile.name.split(".").pop();
-      const authorImageName = `author_image_${
-        authorImageFile.name.split(".")[0]
-      }_${timestamp}.${authorImageExt}`;
-      const authorImageFullPath = path.join(
-        process.cwd(),
-        "public",
-        "uploads",
+      const authorImageName = `author_${author.replace(
+        /\s+/g,
+        "_"
+      )}_${timestamp}`;
+      authorImageUrl = await uploadToCloudinary(
+        authorImageBuffer,
+        "author-avatars",
         authorImageName
       );
-
-      await fs.promises.writeFile(authorImageFullPath, authorImageBuffer);
-      authorImagePath = `/uploads/${authorImageName}`;
-    } else if (authorImageUrl) {
-      // Nếu là URL từ Clerk
-      authorImagePath = authorImageUrl;
+    } else if (authorImageClerkUrl) {
+      // Use Clerk avatar URL directly
+      authorImageUrl = authorImageClerkUrl;
     } else {
-      // Default avatar
-      authorImagePath = "/profile_icon.png";
+      // Default avatar - will need to upload default to Cloudinary too
+      authorImageUrl = "/profile_icon.png";
     }
 
+    // Save to database
     await connectDB();
 
     const newBlogPost = new BlogModel({
@@ -127,13 +123,15 @@ export async function POST(request) {
       description,
       category,
       author,
-      authorId: userId, // Save Clerk User ID
+      authorId: userId,
       status,
-      image: `/uploads/${imageName}`,
-      author_img: authorImagePath, // Có thể là local path hoặc Clerk URL
+      image: imageUrl, // Cloudinary URL
+      author_img: authorImageUrl, // Cloudinary URL or Clerk URL
     });
 
     await newBlogPost.save();
+
+    console.log("Blog post created successfully with Cloudinary images");
 
     return NextResponse.json(
       { message: "Blog post created successfully", blog: newBlogPost },

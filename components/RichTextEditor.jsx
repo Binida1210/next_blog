@@ -37,7 +37,7 @@ import {
 const RichTextEditor = ({ value, onChange, placeholder }) => {
   // State to toggle between Visual Editor and HTML Source view
   const [showHtmlSource, setShowHtmlSource] = useState(false);
-  
+
   // State for HTML textarea (when in source view)
   const [htmlSource, setHtmlSource] = useState(value || "");
   // Initialize Tiptap editor with configuration
@@ -134,117 +134,118 @@ const RichTextEditor = ({ value, onChange, placeholder }) => {
           {/* Text Formatting Buttons - Only show in Visual mode */}
           {!showHtmlSource && (
             <>
+              {/* Bold Button - Toggle bold text formatting */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                active={editor.isActive("bold")}
+                title="Bold (Ctrl+B)"
+              >
+                <Bold className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Bold Button - Toggle bold text formatting */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          active={editor.isActive("bold")}
-          title="Bold (Ctrl+B)"
-        >
-          <Bold className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Italic Button - Toggle italic text formatting */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+                active={editor.isActive("italic")}
+                title="Italic (Ctrl+I)"
+              >
+                <Italic className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Italic Button - Toggle italic text formatting */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          active={editor.isActive("italic")}
-          title="Italic (Ctrl+I)"
-        >
-          <Italic className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Heading Buttons */}
 
-        {/* Heading Buttons */}
+              {/* H2 Heading Button */}
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 2 }).run()
+                }
+                active={editor.isActive("heading", { level: 2 })}
+                title="Heading 2"
+              >
+                <Heading2 className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* H2 Heading Button */}
-        <ToolbarButton
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 2 }).run()
-          }
-          active={editor.isActive("heading", { level: 2 })}
-          title="Heading 2"
-        >
-          <Heading2 className="w-4 h-4" />
-        </ToolbarButton>
+              {/* H3 Heading Button */}
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 3 }).run()
+                }
+                active={editor.isActive("heading", { level: 3 })}
+                title="Heading 3"
+              >
+                <Heading3 className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* H3 Heading Button */}
-        <ToolbarButton
-          onClick={() =>
-            editor.chain().focus().toggleHeading({ level: 3 }).run()
-          }
-          active={editor.isActive("heading", { level: 3 })}
-          title="Heading 3"
-        >
-          <Heading3 className="w-4 h-4" />
-        </ToolbarButton>
+              {/* List Buttons */}
 
-        {/* List Buttons */}
+              {/* Bullet List Button */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                active={editor.isActive("bulletList")}
+                title="Bullet List"
+              >
+                <List className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Bullet List Button */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          active={editor.isActive("bulletList")}
-          title="Bullet List"
-        >
-          <List className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Numbered List Button */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                active={editor.isActive("orderedList")}
+                title="Numbered List"
+              >
+                <ListOrdered className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Numbered List Button */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          active={editor.isActive("orderedList")}
-          title="Numbered List"
-        >
-          <ListOrdered className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Blockquote Button */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                active={editor.isActive("blockquote")}
+                title="Quote"
+              >
+                <Quote className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Blockquote Button */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          active={editor.isActive("blockquote")}
-          title="Quote"
-        >
-          <Quote className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Code Block Button */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                active={editor.isActive("codeBlock")}
+                title="Code Block"
+              >
+                <Code className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Code Block Button */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          active={editor.isActive("codeBlock")}
-          title="Code Block"
-        >
-          <Code className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Vertical Divider */}
+              <div className="w-px bg-gray-300 mx-1" />
 
-        {/* Vertical Divider */}
-        <div className="w-px bg-gray-300 mx-1" />
+              {/* History Buttons */}
 
-        {/* History Buttons */}
+              {/* Undo Button - Revert last change */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().undo().run()}
+                title="Undo (Ctrl+Z)"
+              >
+                <Undo className="w-4 h-4" />
+              </ToolbarButton>
 
-        {/* Undo Button - Revert last change */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().undo().run()}
-          title="Undo (Ctrl+Z)"
-        >
-          <Undo className="w-4 h-4" />
-        </ToolbarButton>
-
-        {/* Redo Button - Restore undone change */}
-        <ToolbarButton
-          onClick={() => editor.chain().focus().redo().run()}
-          title="Redo (Ctrl+Y)"
-        >
-          <Redo className="w-4 h-4" />
-        </ToolbarButton>
+              {/* Redo Button - Restore undone change */}
+              <ToolbarButton
+                onClick={() => editor.chain().focus().redo().run()}
+                title="Redo (Ctrl+Y)"
+              >
+                <Redo className="w-4 h-4" />
+              </ToolbarButton>
             </>
           )}
         </div>
-        
+
         {/* View Toggle Button - Right side */}
         <button
           type="button"
           onClick={handleToggleView}
           className="flex items-center gap-2 px-3 py-2 border border-black bg-white hover:bg-[#DBF3FF] transition-colors text-sm font-medium"
-          title={showHtmlSource ? "Switch to Visual Editor" : "Switch to HTML Source"}
+          title={
+            showHtmlSource ? "Switch to Visual Editor" : "Switch to HTML Source"
+          }
         >
           {showHtmlSource ? (
             <>
