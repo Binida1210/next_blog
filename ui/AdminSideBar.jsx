@@ -1,10 +1,17 @@
 "use client";
-import { assets } from "@/assets/assets";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser, SignOutButton } from "@clerk/nextjs";
-import { PlusCircle, BookOpen, Mail, LogOut, ArrowLeft } from "lucide-react";
+import {
+  PlusCircle,
+  BookOpen,
+  Mail,
+  LogOut,
+  ArrowLeft,
+  BookText,
+  User,
+} from "lucide-react";
 
 /**
  * AdminSideBar Component
@@ -32,23 +39,18 @@ const AdminSideBar = ({ onNavigate }) => {
       icon: BookOpen,
       label: "Blog List",
     },
-    {
-      href: "/admin/subscriptions",
-      icon: Mail,
-      label: "Subscriptions",
-    },
   ];
 
   return (
     <aside className="w-full sm:w-64 bg-white border-r border-black min-h-screen flex flex-col">
       {/* Logo Section - Brand identity and page title */}
       <div className="p-6 border-b border-black bg-[#DBF3FF]">
-        <Link href="/" className="block">
-          <Image
-            src={assets.logo}
-            alt="Logo"
-            className="w-[120px] sm:w-[140px] mx-auto sm:mx-0"
-          />
+        <Link
+          href="/"
+          className="flex items-center gap-2 justify-center sm:justify-start"
+        >
+          <BookText className="w-8 h-8 text-[#65BBDF]" />
+          <span className="text-2xl font-black text-gray-900">Blogo</span>
         </Link>
         <p className="mt-3 text-xs text-gray-600 text-center sm:text-left font-medium">
           Admin Dashboard
@@ -60,14 +62,18 @@ const AdminSideBar = ({ onNavigate }) => {
         <div className="p-4 border-b border-black bg-white">
           <div className="flex items-center gap-3">
             {/* User Avatar - Synced from Clerk */}
-            <div className="w-12 h-12 border-2 border-black rounded-full overflow-hidden bg-gray-100 shadow-[-2px_2px_0_rgba(0,0,0,0.2)]">
-              <Image
-                src={user.imageUrl || assets.profile_icon}
-                alt={user.fullName || "User"}
-                width={48}
-                height={48}
-                className="object-cover w-full h-full"
-              />
+            <div className="w-12 h-12 border-2 border-black rounded-full overflow-hidden bg-gray-100 shadow-[-2px_2px_0_rgba(0,0,0,0.2)] flex items-center justify-center">
+              {user.imageUrl ? (
+                <Image
+                  src={user.imageUrl}
+                  alt={user.fullName || "User"}
+                  width={48}
+                  height={48}
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <User className="w-6 h-6 text-gray-400" />
+              )}
             </div>
             {/* User Details */}
             <div className="flex-1 min-w-0">
@@ -137,14 +143,18 @@ const AdminSideBar = ({ onNavigate }) => {
                 }
               `}
             >
-              <div className="w-5 h-5 flex-shrink-0 rounded-full overflow-hidden border border-black">
-                <Image
-                  src={user?.imageUrl || assets.profile_icon}
-                  alt="Profile"
-                  width={20}
-                  height={20}
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-5 h-5 flex-shrink-0 rounded-full overflow-hidden border border-black flex items-center justify-center bg-gray-100">
+                {user?.imageUrl ? (
+                  <Image
+                    src={user.imageUrl}
+                    alt="Profile"
+                    width={20}
+                    height={20}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <User className="w-3 h-3 text-gray-400" />
+                )}
               </div>
               <span>Edit Profile</span>
             </Link>

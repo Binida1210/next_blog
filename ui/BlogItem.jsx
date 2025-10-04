@@ -1,7 +1,7 @@
-import { assets } from "@/assets/assets";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const BlogItem = ({ props }) => {
   return (
@@ -49,13 +49,7 @@ const BlogItem = ({ props }) => {
           className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white font-medium text-sm border border-gray-700 shadow-[-4px_4px_0_#DBF3FF] hover:shadow-[-3px_3px_0_#65BBDF] hover:bg-gray-700 active:shadow-none active:translate-x-[-1px] active:translate-y-[1px] transition-all duration-200 mt-auto"
         >
           <span>Read more</span>
-          <Image
-            src={assets.arrow}
-            alt="arrow"
-            width={16}
-            height={16}
-            className="filter brightness-0 invert"
-          />
+          <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
     </div>

@@ -8,7 +8,7 @@ export default function BlogLayout({ children }) {
   return (
     <>
       <Header />
-      <section className="py-5 sm:pb-10">{children}</section>
+      <section>{children}</section>
     </>
   );
 }

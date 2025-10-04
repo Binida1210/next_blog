@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import BlogItem from "../ui/BlogItem";
-import { filterCategories } from "@/assets/assets";
 
 /**
  * BlogList Component
@@ -12,10 +11,12 @@ import { filterCategories } from "@/assets/assets";
  * - Search by title (from parent SearchBar)
  * - Loading and error states
  * - Responsive grid layout
+ * - Optional limit for displaying a subset of posts
  *
  * @param {string} searchTerm - Search query from SearchBar component
+ * @param {number} limit - Optional limit for number of posts to display (for home page)
  */
-const BlogList = ({ searchTerm = "" }) => {
+const BlogList = ({ searchTerm = "", limit = null }) => {
   // State for selected category filter
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -53,7 +54,7 @@ const BlogList = ({ searchTerm = "" }) => {
   const categories = ["All", ...new Set(blogs.map((blog) => blog.category))];
 
   // Filter blogs based on both category and search term
-  const filteredBlogs = blogs.filter((item) => {
+  let filteredBlogs = blogs.filter((item) => {
     // Check if blog matches selected category
     const matchesCategory =
       selectedCategory === "All" || item.category === selectedCategory;
@@ -66,6 +67,11 @@ const BlogList = ({ searchTerm = "" }) => {
     // Blog must match both filters
     return matchesCategory && matchesSearch;
   });
+
+  // Apply limit if specified (for home page showing latest 10 posts)
+  if (limit && !searchTerm && selectedCategory === "All") {
+    filteredBlogs = filteredBlogs.slice(0, limit);
+  }
 
   // Loading State - Show spinner while fetching data
   if (loading) {

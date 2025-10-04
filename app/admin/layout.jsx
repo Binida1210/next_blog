@@ -1,8 +1,7 @@
 "use client";
 import AdminSideBar from "@/ui/AdminSideBar";
 import { useState } from "react";
-import Image from "next/image";
-import { assets } from "@/assets/assets";
+import { BookText, Menu } from "lucide-react";
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -11,18 +10,15 @@ export default function AdminLayout({ children }) {
     <div className="min-h-screen bg-gray-50 flex flex-col sm:flex-row">
       {/* Mobile Header */}
       <div className="sm:hidden flex items-center justify-between p-4 bg-white border-b border-black">
-        <Image
-          src={assets.logo}
-          alt="Logo"
-          width={100}
-          height={30}
-          className="w-[100px]"
-        />
+        <div className="flex items-center gap-2">
+          <BookText className="w-6 h-6 text-[#65BBDF]" />
+          <span className="text-xl font-black text-gray-900">Blogo</span>
+        </div>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="px-4 py-2 border border-black bg-[#DBF3FF] shadow-[-3px_3px_0_#65BBDF] active:shadow-none"
         >
-          <span className="text-xl">☰</span>
+          <Menu className="w-5 h-5" />
         </button>
       </div>
 

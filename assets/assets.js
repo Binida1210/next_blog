@@ -1,21 +1,14 @@
-import facebook_icon from "./facebook_icon.png";
-import googleplus_icon from "./googleplus_icon.png";
-import twitter_icon from "./twitter_icon.png";
-import profile_icon from "./profile_icon.jpg";
-import logo from "./logo.png";
-import arrow from "./arrow.png";
-import logo_light from "./logo_light.png";
-import email_icon from "./email_icon.png";
-import upload_area from "./upload_area.png";
+// All icons have been migrated to Lucide React
+// This file is kept for potential future asset imports (images, etc.)
 
-export const assets = {
-  facebook_icon,
-  googleplus_icon,
-  twitter_icon,
-  profile_icon,
-  logo,
-  arrow,
-  logo_light,
-  email_icon,
-  upload_area,
-};
+export const assets = {};
+
+// Migration completed on October 4, 2025
+// Removed assets (all replaced with Lucide React icons):
+// ✅ facebook_icon, twitter_icon, googleplus_icon, email_icon → <Facebook />, <Twitter />, <Github />, <Mail />
+// ✅ profile_icon → <User />
+// ✅ logo, logo_light → <Globe /> + "Blogger" text
+// ✅ upload_area → <Upload />
+// ✅ arrow → <ArrowRight />
+
+// All blog images (blog_pic_*.png) are kept in the assets folder for sample content

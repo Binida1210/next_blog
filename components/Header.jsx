@@ -1,8 +1,6 @@
-import { assets } from "../assets/assets";
-import Image from "next/image";
 import Link from "next/link";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { ArrowRight, PlusCircle } from "lucide-react";
+import { ArrowRight, PlusCircle, BookText } from "lucide-react";
 
 /**
  * Header Component
@@ -17,56 +15,103 @@ import { ArrowRight, PlusCircle } from "lucide-react";
  */
 const Header = () => {
   return (
-    <div className="p-5 md:px-12 lg:px-28">
-      <div className="flex justify-between items-center">
-        {/* Logo - Links to homepage */}
-        <Link href="/">
-          <Image
-            src={assets.logo}
-            alt="Logo"
-            width={130}
-            height={40}
-            className="w-[130px] sm:w-auto"
-          />
-        </Link>
+    <header className="sticky top-0 z-50 bg-white border-b-4 border-black shadow-sm">
+      <div className="p-4 md:px-12 lg:px-28">
+        <div className="flex justify-between items-center">
+          {/* Left: Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
+            <div className="w-10 h-10 bg-[#65BBDF] border-2 border-black rounded-lg flex items-center justify-center shadow-[-3px_3px_0_rgba(0,0,0,0.8)]">
+              <BookText className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-2xl font-black text-gray-900 tracking-tight">
+              Blogo
+            </span>
+          </Link>
 
-        {/* Right side navigation - Authentication-aware */}
-        <div className="flex justify-end items-center gap-4 h-16">
-          {/* Show for non-authenticated users */}
-          <SignedOut>
-            {/* Sign In Button - Opens Clerk authentication modal */}
-            <SignInButton>
-              <button className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black shadow-[-7px_7px_0_#DBF3FF] hover:shadow-[-6px_6px_0_#65BBDF] transition-all duration-200">
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </SignInButton>
-          </SignedOut>
-
-          {/* Show for authenticated users */}
-          <SignedIn>
-            {/* Quick Add Post Button - Links to admin create page */}
-            <Link href="/admin/addProduct">
-              <button className="flex items-center gap-2 font-medium py-1 px-2.5 sm:py-2 sm:px-3.5 border border-black bg-white hover:bg-[#DBF3FF] transition-all duration-200 rounded-md shadow-sm hover:shadow-md">
-                <PlusCircle className="w-[18px] h-[18px]" />
-                {/* Hide text on mobile, show on larger screens */}
-                <span className="hidden sm:inline text-sm">Add New Post</span>
-              </button>
+          {/* Center: Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
+            <Link
+              href="/"
+              className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-[#65BBDF] hover:bg-gray-50 rounded-lg transition-all duration-200"
+            >
+              Home
             </Link>
+            <Link
+              href="/blog"
+              className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-[#65BBDF] hover:bg-gray-50 rounded-lg transition-all duration-200"
+            >
+              Blog
+            </Link>
+            <Link
+              href="/about"
+              className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-[#65BBDF] hover:bg-gray-50 rounded-lg transition-all duration-200"
+            >
+              About
+            </Link>
+          </nav>
 
-            {/* User Profile Button - Clerk's built-in component */}
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: "w-10 h-10 sm:w-11 sm:h-11",
-                  userButtonPopoverCard: "shadow-lg border border-gray-200",
-                },
-              }}
-            />
-          </SignedIn>
+          {/* Right: Authentication Actions */}
+          <div className="flex items-center gap-3">
+            {/* Show for non-authenticated users */}
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="flex items-center gap-2 font-bold py-2.5 px-5 border-2 border-black bg-[#DBF3FF] shadow-[-4px_4px_0_rgba(0,0,0,0.8)] hover:shadow-[-2px_2px_0_rgba(0,0,0,0.8)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 rounded-lg">
+                  <span className="hidden sm:inline">Get Started</span>
+                  <span className="sm:hidden">Sign In</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </SignInButton>
+            </SignedOut>
+
+            {/* Show for authenticated users */}
+            <SignedIn>
+              <Link href="/admin/addProduct">
+                <button className="flex items-center gap-2 font-bold py-2.5 px-4 border-2 border-black bg-[#65BBDF] text-white shadow-[-4px_4px_0_rgba(0,0,0,0.8)] hover:shadow-[-2px_2px_0_rgba(0,0,0,0.8)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 rounded-lg">
+                  <PlusCircle className="w-4 h-4" />
+                  <span className="hidden sm:inline">New Post</span>
+                </button>
+              </Link>
+
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox:
+                      "w-10 h-10 border-2 border-black rounded-full shadow-[-3px_3px_0_rgba(0,0,0,0.8)]",
+                    userButtonPopoverFooter: "hidden",
+                    userButtonPopoverCard: "border-2 border-black shadow-lg",
+                  },
+                }}
+              />
+            </SignedIn>
+          </div>
         </div>
+
+        {/* Mobile Navigation */}
+        <nav className="md:hidden flex items-center justify-center gap-1 mt-3 pt-3 border-t border-gray-200">
+          <Link
+            href="/"
+            className="px-3 py-1.5 text-xs font-semibold text-gray-700 hover:text-[#65BBDF] hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            Home
+          </Link>
+          <Link
+            href="/blog"
+            className="px-3 py-1.5 text-xs font-semibold text-gray-700 hover:text-[#65BBDF] hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            Blog
+          </Link>
+          <Link
+            href="/about"
+            className="px-3 py-1.5 text-xs font-semibold text-gray-700 hover:text-[#65BBDF] hover:bg-gray-50 rounded-lg transition-all duration-200"
+          >
+            About
+          </Link>
+        </nav>
       </div>
-    </div>
+    </header>
   );
 };
 

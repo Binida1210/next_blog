@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { assets } from "@/assets/assets";
 import { useUser } from "@clerk/nextjs";
 import { useParams, useRouter } from "next/navigation";
 import { canEditBlog } from "@/lib/roles";
 import RichTextEditor from "@/components/RichTextEditor";
 import "@/components/RichTextEditor.css";
+import { User, Upload } from "lucide-react";
 
 const EditBlogPage = () => {
   const { user, isLoaded } = useUser();
@@ -238,13 +238,19 @@ const EditBlogPage = () => {
               Author
             </label>
             <div className="flex items-center gap-3 px-4 py-3 border border-black bg-gray-50">
-              <Image
-                src={blog.author_img || assets.profile_icon}
-                alt="Author"
-                width={40}
-                height={40}
-                className="rounded-full border border-black object-cover"
-              />
+              <div className="w-10 h-10 rounded-full border border-black overflow-hidden bg-white flex items-center justify-center">
+                {blog.author_img ? (
+                  <Image
+                    src={blog.author_img}
+                    alt="Author"
+                    width={40}
+                    height={40}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <User className="w-5 h-5 text-gray-400" />
+                )}
+              </div>
               <span className="font-semibold text-gray-900">{blog.author}</span>
             </div>
           </div>
@@ -271,14 +277,10 @@ const EditBlogPage = () => {
                   </button>
                 </div>
               ) : (
-                <div className="py-8">
-                  <Image
-                    src={assets.upload_area}
-                    alt="Upload"
-                    width={80}
-                    height={80}
-                    className="mx-auto mb-3"
-                  />
+                <div className="py-8 flex flex-col items-center justify-center">
+                  <div className="w-20 h-20 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center mb-3">
+                    <Upload className="w-10 h-10 text-gray-400" />
+                  </div>
                   <p className="text-sm text-gray-600">Upload New Image</p>
                 </div>
               )}

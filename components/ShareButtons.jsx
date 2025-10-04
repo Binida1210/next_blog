@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
-import { assets } from "@/assets/assets";
+import { Twitter, Facebook, Mail, Copy, Check } from "lucide-react";
 
 const ShareButtons = ({ title, url }) => {
   const [copied, setCopied] = useState(false);
@@ -46,7 +45,7 @@ const ShareButtons = ({ title, url }) => {
         className={buttonClass}
         aria-label="Share on Twitter"
       >
-        <Image src={assets.twitter_icon} alt="" width={24} height={24} />
+        <Twitter className="w-5 h-5" />
         <span>Twitter</span>
       </button>
 
@@ -55,7 +54,7 @@ const ShareButtons = ({ title, url }) => {
         className={buttonClass}
         aria-label="Share on Facebook"
       >
-        <Image src={assets.facebook_icon} alt="" width={24} height={24} />
+        <Facebook className="w-5 h-5" />
         <span>Facebook</span>
       </button>
 
@@ -64,13 +63,7 @@ const ShareButtons = ({ title, url }) => {
         className={buttonClass}
         aria-label="Share by Email"
       >
-        <Image
-          src={assets.email_icon}
-          alt=""
-          width={24}
-          height={24}
-          className="brightness-0 invert"
-        />
+        <Mail className="w-5 h-5" />
         <span>Email</span>
       </button>
 
@@ -79,7 +72,8 @@ const ShareButtons = ({ title, url }) => {
         className={buttonClass}
         aria-label="Copy Link"
       >
-        <span>{copied ? "✓ Copied!" : "Copy Link"}</span>
+        {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+        <span>{copied ? "Copied!" : "Copy Link"}</span>
       </button>
     </div>
   );

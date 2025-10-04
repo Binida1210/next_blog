@@ -42,14 +42,6 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="text-center my-8">
-      {/* Page Title */}
-      <h1 className="text-3xl sm:text-5xl font-medium">Latest Blog</h1>
-
-      {/* Subtitle */}
-      <p className="mt-3 text-sm text-gray-400">
-        Search for articles and insights by title.
-      </p>
-
       {/* Search Form with neobrutalism styling */}
       <form
         onSubmit={handleSubmit}
