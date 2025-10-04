@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ScrollToHash from "@/components/ScrollToHash";
 import {
   Mail,
   Github,
@@ -33,10 +34,10 @@ export default function AboutPage() {
       bio: "Passionate about anime, tech, and sharing knowledge with the community.",
       image: null, // Will use placeholder icon
       socials: {
-        email: "binida2k1@gmail.com",
-        github: "https://github.com/Binida1210",
-        twitter: "#",
-        linkedin: "#",
+        email: "mailto:binida2k1@gmail.com",
+        github: "https://github.com/binida1210",
+        twitter: "https://twitter.com/",
+        linkedin: "https://linkedin.com/in/binida2k1",
       },
     },
     {
@@ -45,10 +46,10 @@ export default function AboutPage() {
       bio: "Loves writing about web development and pop culture.",
       image: null, // Will use placeholder icon
       socials: {
-        email: "johndoe@gmail.com",
-        github: "#",
-        twitter: "#",
-        linkedin: "#",
+        email: "mailto:johndoe@gmail.com",
+        github: "https://github.com/",
+        twitter: "https://twitter.com/",
+        linkedin: "https://linkedin.com/",
       },
     },
     // Add more team members here
@@ -102,6 +103,7 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <ScrollToHash />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 py-20 border-b-4 border-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -237,7 +239,10 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50 border-t-4 border-black">
+      <section
+        className="py-20 bg-gradient-to-br from-purple-50 to-pink-50 border-t-4 border-black"
+        id="contact"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">

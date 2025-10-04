@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import RichTextEditor from "@/components/RichTextEditor";
 import "@/components/RichTextEditor.css";
 import { User, Upload, X } from "lucide-react";
 
 const AddProductPage = () => {
   const { user, isLoaded } = useUser();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -16,7 +19,6 @@ const AddProductPage = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   // Author info from Clerk user
   const [authorInfo, setAuthorInfo] = useState({
@@ -62,7 +64,6 @@ const AddProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     try {
       const form = new FormData();
@@ -77,7 +78,7 @@ const AddProductPage = () => {
       if (imageInput.files[0]) {
         form.append("image", imageInput.files[0]);
       } else {
-        setMessage("❌ Please upload a blog cover image");
+        toast.error("Please upload a blog cover image");
         setLoading(false);
         return;
       }
@@ -103,9 +104,10 @@ const AddProductPage = () => {
 
       const data = await response.json();
 
-      // Đặt message dựa trên phản hồi từ server
       if (response.ok) {
-        setMessage("✓ Blog post created successfully!");
+        // Show success toast
+        toast.success("Blog post created successfully! Redirecting to home...");
+
         // Reset form
         setFormData({
           title: "",
@@ -113,12 +115,21 @@ const AddProductPage = () => {
           category: "",
         });
         setImagePreview(null);
-        e.target.reset();
+
+        // Reset file input
+        if (imageInput) {
+          imageInput.value = "";
+        }
+
+        // Redirect to home after 3 seconds
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
       } else {
-        setMessage(`❌ Error: ${data.message}`);
+        toast.error(data.message || "Failed to create blog post");
       }
     } catch (error) {
-      setMessage(`❌ Error: ${error.message}`);
+      toast.error(error.message || "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -133,19 +144,6 @@ const AddProductPage = () => {
         </h1>
         <p className="text-gray-600">Create and publish a new blog article</p>
       </div>
-
-      {/* Message Alert */}
-      {message && (
-        <div
-          className={`mb-6 p-4 border border-black ${
-            message.includes("Error") || message.includes("❌")
-              ? "bg-red-50 text-red-700"
-              : "bg-green-50 text-green-700"
-          } shadow-[-3px_3px_0_#65BBDF]`}
-        >
-          {message}
-        </div>
-      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">

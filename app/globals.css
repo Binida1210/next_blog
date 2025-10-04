@@ -224,3 +224,46 @@ body {
     font-size: 1.25rem;
   }
 }
+
+/* Toast Notifications - Neo-Brutalism Style */
+.Toastify__toast {
+  border: 2px solid #000000 !important;
+  box-shadow: -4px 4px 0 rgba(0, 0, 0, 0.8) !important;
+  border-radius: 8px !important;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  padding: 16px !important;
+}
+
+.Toastify__toast--success {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+.Toastify__toast--error {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+.Toastify__toast--warning {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.Toastify__toast--info {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+.Toastify__progress-bar {
+  background: #000000 !important;
+}
+
+.Toastify__close-button {
+  color: #000000 !important;
+  opacity: 0.7 !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
+}

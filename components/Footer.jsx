@@ -61,8 +61,9 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="/about#contact"
                   className="text-gray-300 hover:text-[#65BBDF] transition-colors duration-200 text-xs sm:text-sm md:text-base block py-0.5"
+                  scroll={true}
                 >
                   Contact
                 </Link>
@@ -87,7 +88,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://linkedin.com/in/binhtran2k1"
+                href="https://linkedin.com/in/binida2k1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#65BBDF] p-1.5 sm:p-2 rounded-full hover:bg-[#DBF3FF] transition-colors duration-200"

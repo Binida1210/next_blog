@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { useParams, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import { canEditBlog } from "@/lib/roles";
 import RichTextEditor from "@/components/RichTextEditor";
 import "@/components/RichTextEditor.css";
@@ -23,7 +24,6 @@ const EditBlogPage = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState("");
   const [blog, setBlog] = useState(null);
 
   // Fetch blog data
@@ -38,7 +38,7 @@ const EditBlogPage = () => {
 
         // Check permission
         if (isLoaded && user && !canEditBlog(user, data.authorId)) {
-          alert("You don't have permission to edit this post");
+          toast.error("You don't have permission to edit this post");
           router.push("/admin/blogList");
           return;
         }
@@ -51,7 +51,7 @@ const EditBlogPage = () => {
         });
         setImagePreview(data.image);
       } catch (error) {
-        setMessage(`❌ Error: ${error.message}`);
+        toast.error(error.message || "Failed to load blog");
       } finally {
         setLoading(false);
       }
@@ -83,7 +83,6 @@ const EditBlogPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    setMessage("");
 
     try {
       const form = new FormData();
@@ -105,15 +104,18 @@ const EditBlogPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("✓ Blog post updated successfully!");
+        // Show success toast
+        toast.success("Blog post updated successfully! Redirecting...");
+
+        // Redirect to the updated blog post after 3 seconds
         setTimeout(() => {
-          router.push("/admin/blogList");
-        }, 1500);
+          router.push(`/blog/${id}`);
+        }, 3000);
       } else {
-        setMessage(`❌ Error: ${data.message}`);
+        toast.error(data.message || "Failed to update blog post");
       }
     } catch (error) {
-      setMessage(`❌ Error: ${error.message}`);
+      toast.error(error.message || "An error occurred");
     } finally {
       setSaving(false);
     }
@@ -147,19 +149,6 @@ const EditBlogPage = () => {
         </h1>
         <p className="text-gray-600">Update your blog article</p>
       </div>
-
-      {/* Message Alert */}
-      {message && (
-        <div
-          className={`mb-6 p-4 border border-black ${
-            message.includes("Error") || message.includes("❌")
-              ? "bg-red-50 text-red-700"
-              : "bg-green-50 text-green-700"
-          } shadow-[-3px_3px_0_#65BBDF]`}
-        >
-          {message}
-        </div>
-      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">

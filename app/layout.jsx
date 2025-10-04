@@ -1,7 +1,9 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "../components/Footer";
+import { ToastContainer } from "react-toastify";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -62,6 +64,26 @@ export default function RootLayout({ children }) {
         >
           {children}
           <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            style={{
+              zIndex: 9999,
+            }}
+            toastStyle={{
+              border: "2px solid black",
+              boxShadow: "-4px 4px 0 rgba(0,0,0,0.8)",
+              borderRadius: "8px",
+            }}
+          />
         </body>
       </html>
     </ClerkProvider>
