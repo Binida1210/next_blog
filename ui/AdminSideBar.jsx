@@ -40,7 +40,7 @@ const AdminSideBar = ({ onNavigate }) => {
   ];
 
   return (
-    <aside className="w-full sm:w-64 bg-white border-r border-black min-h-screen">
+    <aside className="w-full sm:w-64 bg-white border-r border-black min-h-screen flex flex-col">
       {/* Logo Section - Brand identity and page title */}
       <div className="p-6 border-b border-black bg-[#DBF3FF]">
         <Link href="/" className="block">
@@ -83,7 +83,7 @@ const AdminSideBar = ({ onNavigate }) => {
       )}
 
       {/* Navigation Menu */}
-      <nav className="p-4">
+      <nav className="p-4 flex-1 overflow-y-auto">
         <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 px-2">
           Content
         </h3>
@@ -169,7 +169,7 @@ const AdminSideBar = ({ onNavigate }) => {
       </nav>
 
       {/* Bottom Section - Quick Actions */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-black bg-gray-50">
+      <div className="p-4 border-t border-black bg-gray-50 mt-auto">
         <Link
           href="/"
           className="flex items-center justify-center gap-2 px-4 py-2 border border-black bg-white text-sm font-medium shadow-[-3px_3px_0_#DBF3FF] hover:shadow-[-4px_4px_0_#65BBDF] hover:bg-[#DBF3FF] transition-all duration-200"
