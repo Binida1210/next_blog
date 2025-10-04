@@ -115,8 +115,8 @@ const Footer = () => {
               </a>
             </div>
             {/* Made by Binh Tran */}
-            <div className="text-center text-gray-400 text-xs sm:text-sm mb-4 mt-12">
-              <p className="hidden sm:inline-block">Made with ❤️ by Binida</p>
+            <div className="text-center text-gray-400 text-xs sm:text-sm mb-4 mt-6 sm:mt-12">
+              <p>Made with ❤️ by Binida</p>
             </div>
           </div>
         </div>
