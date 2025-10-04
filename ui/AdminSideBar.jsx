@@ -42,9 +42,9 @@ const AdminSideBar = ({ onNavigate }) => {
   ];
 
   return (
-    <aside className="w-full sm:w-64 bg-white border-r border-black min-h-screen flex flex-col">
+    <aside className="w-full sm:w-64 bg-white border-r-4 border-black min-h-screen flex flex-col">
       {/* Logo Section - Brand identity and page title */}
-      <div className="p-6 border-b border-black bg-[#DBF3FF]">
+      <div className="p-6 border-b-4 border-black bg-[#DBF3FF]">
         <Link
           href="/"
           className="flex items-center gap-2 justify-center sm:justify-start"
@@ -59,7 +59,7 @@ const AdminSideBar = ({ onNavigate }) => {
 
       {/* User Profile Section - Display Clerk authenticated user info */}
       {user && (
-        <div className="p-4 border-b border-black bg-white">
+        <div className="p-4 border-b-4 border-black bg-white">
           <div className="flex items-center gap-3">
             {/* User Avatar - Synced from Clerk */}
             <div className="w-12 h-12 border-2 border-black rounded-full overflow-hidden bg-gray-100 shadow-[-2px_2px_0_rgba(0,0,0,0.2)] flex items-center justify-center">
@@ -105,12 +105,12 @@ const AdminSideBar = ({ onNavigate }) => {
                   onClick={() => onNavigate?.()}
                   className={`
                     flex items-center gap-3 px-4 py-3 rounded-none
-                    border border-black font-medium text-sm
+                    border-2 border-black font-medium text-sm
                     transition-all duration-200
                     ${
                       isActive
                         ? "bg-[#65BBDF] text-white shadow-[-4px_4px_0_#DBF3FF]"
-                        : "bg-white text-gray-800 shadow-[-3px_3px_0_#DBF3FF] hover:shadow-[-4px_4px_0_#65BBDF] hover:bg-[#DBF3FF]"
+                        : "bg-white text-gray-900 shadow-[-3px_3px_0_#DBF3FF] hover:shadow-[-4px_4px_0_#65BBDF] hover:bg-[#DBF3FF]"
                     }
                   `}
                 >
@@ -165,13 +165,13 @@ const AdminSideBar = ({ onNavigate }) => {
             <SignOutButton redirectUrl="/">
               <button
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-none
-                  border border-black font-medium text-sm
+                  border-2 border-black font-medium text-sm
                   bg-white text-red-600 shadow-[-3px_3px_0_#DBF3FF] 
                   hover:shadow-[-4px_4px_0_#FFE5E5] hover:bg-red-50
                   transition-all duration-200"
               >
-                <LogOut className="w-5 h-5 flex-shrink-0" />
-                <span>Logout</span>
+                <LogOut className="w-5 h-5 flex-shrink-0 text-red-600" />
+                <span className="text-red-600">Logout</span>
               </button>
             </SignOutButton>
           </li>
@@ -179,13 +179,13 @@ const AdminSideBar = ({ onNavigate }) => {
       </nav>
 
       {/* Bottom Section - Quick Actions */}
-      <div className="p-4 border-t border-black bg-gray-50 mt-auto">
+      <div className="p-4 border-t-4 border-black bg-gray-50 mt-auto">
         <Link
           href="/"
-          className="flex items-center justify-center gap-2 px-4 py-2 border border-black bg-white text-sm font-medium shadow-[-3px_3px_0_#DBF3FF] hover:shadow-[-4px_4px_0_#65BBDF] hover:bg-[#DBF3FF] transition-all duration-200"
+          className="flex items-center justify-center gap-2 px-4 py-2 border-2 border-black bg-white text-gray-900 text-sm font-medium shadow-[-3px_3px_0_#DBF3FF] hover:shadow-[-4px_4px_0_#65BBDF] hover:bg-[#DBF3FF] transition-all duration-200"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Blog</span>
+          <ArrowLeft className="w-4 h-4 text-gray-900" />
+          <span className="text-gray-900">Back to Blog</span>
         </Link>
       </div>
     </aside>

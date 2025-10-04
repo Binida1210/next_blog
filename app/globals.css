@@ -1,21 +1,33 @@
 @import "tailwindcss";
 
+/* Force light mode - Override dark mode preferences */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  color-scheme: light;
 }
 
+/* Disable dark mode completely */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #171717;
+    color-scheme: light;
   }
 }
 
+/* Force light mode on html and body */
+html {
+  background-color: #ffffff;
+  color: #000000;
+  color-scheme: light;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: #ffffff;
+  color: #171717;
   font-family: Arial, Helvetica, sans-serif;
+  color-scheme: light;
 }
 
 /* Line Clamp Utilities */

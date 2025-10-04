@@ -12,7 +12,7 @@ const HomePage = () => {
   };
 
   return (
-    <main>
+    <main className="bg-white">
       <Header />
 
       {/* Latest Blog Section - Only on Home Page */}

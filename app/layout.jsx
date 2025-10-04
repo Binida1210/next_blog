@@ -56,8 +56,10 @@ const clerkAppearance = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider appearance={clerkAppearance}>
-      <html lang="en">
-        <body className={`${outfit.variable} antialiased`}>
+      <html lang="en" className="bg-white">
+        <body
+          className={`${outfit.variable} antialiased bg-white text-gray-900`}
+        >
           {children}
           <Footer />
         </body>

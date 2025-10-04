@@ -58,10 +58,12 @@ const Header = () => {
             {/* Show for non-authenticated users */}
             <SignedOut>
               <SignInButton mode="modal">
-                <button className="flex items-center gap-2 font-bold py-2.5 px-5 border-2 border-black bg-[#DBF3FF] shadow-[-4px_4px_0_rgba(0,0,0,0.8)] hover:shadow-[-2px_2px_0_rgba(0,0,0,0.8)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 rounded-lg">
-                  <span className="hidden sm:inline">Get Started</span>
-                  <span className="sm:hidden">Sign In</span>
-                  <ArrowRight className="w-4 h-4" />
+                <button className="flex items-center gap-2 font-bold py-2.5 px-5 border-2 border-black bg-[#DBF3FF] text-gray-900 shadow-[-4px_4px_0_rgba(0,0,0,0.8)] hover:shadow-[-2px_2px_0_rgba(0,0,0,0.8)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 rounded-lg">
+                  <span className="hidden sm:inline text-gray-900">
+                    Get Started
+                  </span>
+                  <span className="sm:hidden text-gray-900">Sign In</span>
+                  <ArrowRight className="w-4 h-4 text-gray-900" />
                 </button>
               </SignInButton>
             </SignedOut>

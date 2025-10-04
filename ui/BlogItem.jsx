@@ -5,10 +5,10 @@ import { ArrowRight } from "lucide-react";
 
 const BlogItem = ({ props }) => {
   return (
-    <div className="w-full bg-white border border-black hover:shadow-[-6px_6px_0_#65BBDF] transition-all duration-200 flex flex-col h-[500px]">
+    <div className="w-full bg-white border-2 border-black hover:shadow-[-6px_6px_0_#65BBDF] transition-all duration-200 flex flex-col h-[500px]">
       {/* Image Section - Fixed Height */}
       <Link href={`/blog/${props._id || props.id}`} className="block">
-        <div className="relative w-full h-[200px] border-b border-black overflow-hidden bg-gray-100">
+        <div className="relative w-full h-[200px] border-b-2 border-black overflow-hidden bg-gray-100">
           <Image
             src={props.image}
             alt={props.title}
@@ -46,10 +46,10 @@ const BlogItem = ({ props }) => {
         {/* Read More Button - Bottom */}
         <Link
           href={`/blog/${props._id || props.id}`}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white font-medium text-sm border border-gray-700 shadow-[-4px_4px_0_#DBF3FF] hover:shadow-[-3px_3px_0_#65BBDF] hover:bg-gray-700 active:shadow-none active:translate-x-[-1px] active:translate-y-[1px] transition-all duration-200 mt-auto"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gray-800 text-white font-medium text-sm border-2 border-black shadow-[-4px_4px_0_#DBF3FF] hover:shadow-[-3px_3px_0_#65BBDF] hover:bg-gray-700 active:shadow-none active:translate-x-[-1px] active:translate-y-[1px] transition-all duration-200 mt-auto"
         >
-          <span>Read more</span>
-          <ArrowRight className="w-4 h-4" />
+          <span className="text-white">Read more</span>
+          <ArrowRight className="w-4 h-4 text-white" />
         </Link>
       </div>
     </div>
