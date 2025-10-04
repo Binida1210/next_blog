@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { getUserRole, canEditBlog, canDeleteBlog, ROLES } from "@/lib/roles";
+import { toast } from "react-toastify";
 
 const BlogListPage = () => {
   const { user, isLoaded } = useUser();
@@ -39,7 +40,7 @@ const BlogListPage = () => {
 
   const handleDelete = async (id, authorId) => {
     if (!canDeleteBlog(user, authorId)) {
-      alert("You don't have permission to delete this post");
+      toast.error("You don't have permission to delete this post");
       return;
     }
 
@@ -52,19 +53,20 @@ const BlogListPage = () => {
 
       if (response.ok) {
         setBlogs(blogs.filter((blog) => blog._id !== id));
-        alert("Blog deleted successfully!");
+        toast.success("Blog deleted successfully!");
       } else {
         const data = await response.json();
-        alert(data.message || "Failed to delete blog post");
+        toast.error(data.message || "Failed to delete blog post");
       }
     } catch (err) {
-      alert("Error deleting blog post");
+      console.error("Delete error:", err);
+      toast.error("Error deleting blog post");
     }
   };
 
   const toggleStatus = async (id, currentStatus, authorId) => {
     if (!canEditBlog(user, authorId)) {
-      alert("You don't have permission to edit this post");
+      toast.error("You don't have permission to edit this post");
       return;
     }
 
@@ -81,12 +83,14 @@ const BlogListPage = () => {
       });
 
       if (response.ok) {
+        toast.success("Status updated successfully!");
         fetchBlogs(); // Refresh list
       } else {
-        alert("Failed to update status");
+        toast.error("Failed to update status");
       }
     } catch (err) {
-      alert("Error updating status");
+      console.error("Toggle status error:", err);
+      toast.error("Error updating status");
     }
   };
 

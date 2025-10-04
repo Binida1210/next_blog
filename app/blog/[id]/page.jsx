@@ -15,6 +15,64 @@ const Page = () => {
   const [status, setStatus] = useState("loading");
   const { id } = useParams();
 
+  // Update document meta tags dynamically
+  useEffect(() => {
+    if (data) {
+      // Update title
+      document.title = `${data.title} | Blogo`;
+
+      // Update meta description
+      const plainDescription =
+        data.description?.replace(/<[^>]*>/g, "").substring(0, 160) || "";
+
+      let metaDescription = document.querySelector('meta[name="description"]');
+      if (!metaDescription) {
+        metaDescription = document.createElement("meta");
+        metaDescription.name = "description";
+        document.head.appendChild(metaDescription);
+      }
+      metaDescription.content = plainDescription;
+
+      // Update Open Graph tags
+      const updateMetaTag = (property, content) => {
+        let tag = document.querySelector(`meta[property="${property}"]`);
+        if (!tag) {
+          tag = document.createElement("meta");
+          tag.setAttribute("property", property);
+          document.head.appendChild(tag);
+        }
+        tag.content = content;
+      };
+
+      updateMetaTag("og:title", data.title);
+      updateMetaTag("og:description", plainDescription);
+      updateMetaTag("og:image", data.image);
+      updateMetaTag("og:type", "article");
+      updateMetaTag("og:url", `https://binida2k1.vercel.app/blog/${id}`);
+
+      // Update Twitter Card tags
+      const updateTwitterTag = (name, content) => {
+        let tag = document.querySelector(`meta[name="${name}"]`);
+        if (!tag) {
+          tag = document.createElement("meta");
+          tag.setAttribute("name", name);
+          document.head.appendChild(tag);
+        }
+        tag.content = content;
+      };
+
+      updateTwitterTag("twitter:card", "summary_large_image");
+      updateTwitterTag("twitter:title", data.title);
+      updateTwitterTag("twitter:description", plainDescription);
+      updateTwitterTag("twitter:image", data.image);
+    }
+
+    return () => {
+      // Reset title on unmount
+      document.title = "Blogo - Share Your Stories";
+    };
+  }, [data, id]);
+
   // Calculate reading time
   const calculateReadingTime = (text) => {
     if (!text) return 0;

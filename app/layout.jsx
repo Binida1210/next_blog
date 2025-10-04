@@ -12,9 +12,93 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Blogo - Share Your Stories",
+  metadataBase: new URL("https://binida2k1.vercel.app"),
+  title: {
+    default: "Blogo - Share Your Stories",
+    template: "%s | Blogo",
+  },
   description:
-    "A modern blogging platform built with Next.js featuring neo-brutalism design",
+    "A modern blogging platform where you can share stories about technology, anime, and life. Built with Next.js featuring neo-brutalism design.",
+  keywords: [
+    "blog",
+    "blogging platform",
+    "technology blog",
+    "anime blog",
+    "Next.js blog",
+    "neo-brutalism design",
+    "share stories",
+    "write articles",
+  ],
+  authors: [{ name: "Blogo Team" }],
+  creator: "Blogo",
+  publisher: "Blogo",
+
+  // Open Graph
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://binida2k1.vercel.app",
+    siteName: "Blogo",
+    title: "Blogo - Share Your Stories",
+    description:
+      "A modern blogging platform where you can share stories about technology, anime, and life.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Blogo - Share Your Stories",
+      },
+    ],
+  },
+
+  // Twitter Card
+  twitter: {
+    card: "summary_large_image",
+    site: "@blogo",
+    creator: "@blogo",
+    title: "Blogo - Share Your Stories",
+    description:
+      "A modern blogging platform where you can share stories about technology, anime, and life.",
+    images: ["/opengraph-image"],
+  },
+
+  // Additional metadata
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  // Icons
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+
+  // Manifest
+  manifest: "/manifest.json",
+
+  // Theme color
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#65BBDF" },
+    { media: "(prefers-color-scheme: dark)", color: "#65BBDF" },
+  ],
+
+  // Verification (add your verification codes here)
+  // verification: {
+  //   google: "your-google-verification-code",
+  //   yandex: "your-yandex-verification-code",
+  // },
 };
 
 // Global Clerk appearance configuration for neo-brutalism theme

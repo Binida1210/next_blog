@@ -161,23 +161,9 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    // Delete images
-    if (existingBlog.image) {
-      const imagePath = path.join(process.cwd(), "public", existingBlog.image);
-      if (fs.existsSync(imagePath)) {
-        await fs.promises.unlink(imagePath);
-      }
-    }
-    if (existingBlog.author_img) {
-      const authorImagePath = path.join(
-        process.cwd(),
-        "public",
-        existingBlog.author_img
-      );
-      if (fs.existsSync(authorImagePath)) {
-        await fs.promises.unlink(authorImagePath);
-      }
-    }
+    // Note: Images stored on Cloudinary will remain for now
+    // You can optionally implement Cloudinary deletion here using deleteFromCloudinary()
+    // For now, we just delete the database record
 
     await BlogModel.findByIdAndDelete(id);
 
