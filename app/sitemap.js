@@ -1,4 +1,4 @@
-import { connectDB } from "@/lib/config/db";
+import connectDB from "@/lib/config/db";
 import BlogModel from "@/lib/models/blog.model";
 
 export default async function sitemap() {
