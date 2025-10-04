@@ -240,8 +240,8 @@ export default function AboutPage() {
 
       {/* Team Section */}
       <section
-        className="py-20 bg-gradient-to-br from-purple-50 to-pink-50 border-t-4 border-black"
         id="contact"
+        className="py-20 bg-gradient-to-br from-purple-50 to-pink-50 border-t-4 border-black"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

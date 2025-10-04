@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 /**
  * ScrollToHash Component
  * Automatically scrolls to hash anchor when page loads
+ * Accounts for sticky header offset
  * Usage: Add to any page that needs hash anchor scrolling
  */
 export default function ScrollToHash() {
@@ -19,9 +20,15 @@ export default function ScrollToHash() {
       setTimeout(() => {
         const element = document.querySelector(hash);
         if (element) {
-          element.scrollIntoView({
+          // Calculate offset for sticky header (header height + padding)
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
             behavior: "smooth",
-            block: "start",
           });
         }
       }, 100);
